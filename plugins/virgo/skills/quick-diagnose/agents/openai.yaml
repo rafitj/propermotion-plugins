@@ -1,0 +1,6 @@
+interface:
+  display_name: "Quick Diagnose"
+  short_description: "Check diagnostic readiness and evidence gaps"
+  default_prompt: "Use $quick-diagnose to assess what Virgo can prove about my agent and what evidence is still missing."
+policy:
+  allow_implicit_invocation: true

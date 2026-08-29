@@ -1,0 +1,20 @@
+{
+  "name": "propermotion-plugins",
+  "interface": {
+    "displayName": "Proper Motion Plugins"
+  },
+  "plugins": [
+    {
+      "name": "virgo",
+      "source": {
+        "source": "local",
+        "path": "./plugins/virgo"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

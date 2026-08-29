@@ -1,0 +1,6 @@
+interface:
+  display_name: "Proper Motion"
+  short_description: "Analyze production evidence and prove fixes"
+  default_prompt: "Use $propermotion to analyze this production issue through Virgo's canonical evidence and validation workflow."
+policy:
+  allow_implicit_invocation: true

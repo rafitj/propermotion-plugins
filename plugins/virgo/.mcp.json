@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "virgo": {
+      "type": "http",
+      "url": "https://api.propermotion.ai/mcp"
+    }
+  }
+}

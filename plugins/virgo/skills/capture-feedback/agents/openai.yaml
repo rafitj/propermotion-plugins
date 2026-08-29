@@ -1,0 +1,6 @@
+interface:
+  display_name: "Capture Feedback"
+  short_description: "Design a verified agent feedback loop"
+  default_prompt: "Use $capture-feedback to propose a comprehensive feedback system and let me select the app changes."
+policy:
+  allow_implicit_invocation: true

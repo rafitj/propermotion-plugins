@@ -1,0 +1,6 @@
+interface:
+  display_name: "Fix and Prove"
+  short_description: "Ship one scoped fix and prove impact"
+  default_prompt: "Use $fix-and-prove to turn the selected finding into an approved, verified fix."
+policy:
+  allow_implicit_invocation: true

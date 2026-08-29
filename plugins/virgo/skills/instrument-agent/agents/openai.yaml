@@ -1,0 +1,6 @@
+interface:
+  display_name: "Instrument Agent"
+  short_description: "Design and ship agent observability"
+  default_prompt: "Use $instrument-agent to propose comprehensive observability, then let me choose the exact edits."
+policy:
+  allow_implicit_invocation: true
