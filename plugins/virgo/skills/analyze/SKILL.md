@@ -86,7 +86,7 @@ restate its evidence and consequence, obtain the user's explicit decision, and
 then use `virgo_review_match_proposal`. If state changed, review the new version
 again.
 
-If the user chooses a finding to repair, continue with `$fix-and-prove`. When
+If the user chooses a finding to repair, continue with `$virgo:fix-and-prove`. When
 the user asks for a Linear, Slack, or GitHub artifact, prepare the exact preview
 without delivering it. Show its destination, content, and preview hash; deliver
 only after explicit approval of that unchanged preview.

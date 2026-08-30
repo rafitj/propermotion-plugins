@@ -1,6 +1,6 @@
 interface:
   display_name: "Analyze"
   short_description: "Analyze patterns, causes, customers, and impact"
-  default_prompt: "Use $analyze to answer my specific production question with Virgo's canonical evidence."
+  default_prompt: "Use $virgo:analyze to answer my specific production question with Virgo's canonical evidence."
 policy:
   allow_implicit_invocation: true

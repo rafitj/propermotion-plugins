@@ -93,7 +93,7 @@ codex mcp login virgo
 Complete OAuth in the browser, then start a new task so Codex loads the current
 skills and MCP tools.
 
-Verify the installation by loading `$setup`. Use it to resolve the current
+Verify the installation by loading `$virgo:setup`. Use it to resolve the current
 GitHub `owner/repository`, initialize or resume the Virgo workspace, and guide
 the user through every connector available in this deployment. The skill
 obtains separate source-processing approval before setup and uses the hosted
@@ -101,4 +101,4 @@ connector catalog rather than inferring integrations from an empty workspace
 `sources` list.
 
 Use `/skills` to browse the installed workflows or mention one directly, such
-as `$setup`, `$analyze`, or `$identify-kpis`.
+as `$virgo:setup`, `$virgo:analyze`, or `$virgo:identify-kpis`.

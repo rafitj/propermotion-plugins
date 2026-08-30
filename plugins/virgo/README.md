@@ -50,4 +50,5 @@ hash. MCP never returns credentials, raw provider cursors, or unfiltered provide
 payloads and never edits repository files.
 
 Claude Code exposes the installed skills as `/virgo:<skill-name>` commands.
-Codex users can browse them with `/skills` or mention them as `$skill-name`.
+Codex users can browse them with `/skills` or mention them as
+`$virgo:<skill-name>` (for example, `$virgo:setup`).

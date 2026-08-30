@@ -47,8 +47,8 @@ the team cannot measure or act on.
 
 Keep a ledger of accepted, reduced, deferred, and rejected metrics. If a metric
 is valuable but unmeasurable, specify the missing trace, feedback, identity, or
-outcome event and route that work to `$instrument-agent` or
-`$capture-feedback`. Do not silently weaken the metric to fit available data.
+outcome event and route that work to `$virgo:instrument-agent` or
+`$virgo:capture-feedback`. Do not silently weaken the metric to fit available data.
 
 Before configuration, restate the exact primary KPI contract and ask for
 approval. Include supported KPI configuration in the exact setup plan and call

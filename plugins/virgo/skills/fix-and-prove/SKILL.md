@@ -12,7 +12,7 @@ Fix one agreed problem and establish whether the fix worked. Avoid bundling unre
 Call `virgo_get_workspace_context` with the current GitHub repository name and
 inspect the selected finding, affected cohort, evidence, current release/code,
 baseline window, target measure, and guardrails. State what is known, inferred,
-and still unmeasurable. If the user has not selected a finding, use `$analyze`
+and still unmeasurable. If the user has not selected a finding, use `$virgo:analyze`
 to identify and scope one first.
 
 Define the proof contract before editing:

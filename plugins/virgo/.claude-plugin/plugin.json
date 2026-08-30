@@ -1,7 +1,7 @@
 {
   "name": "virgo",
   "displayName": "Virgo (by Proper Motion)",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Analyze, instrument, measure, and improve production AI agents with Virgo.",
   "author": {
     "name": "Proper Motion"
