@@ -38,14 +38,15 @@ If the client reports that a reload is required, run `/reload-plugins`. Open
 `/mcp`, select `virgo`, and complete OAuth when authentication is required.
 Start a new conversation so Claude Code loads the current skills and MCP tools.
 
-Verify the installation by calling `virgo_get_workspace_context` with the
-current GitHub `owner/repository` name. The connection is ready when the
-read-only operation returns the workspace's capabilities, sources, freshness,
-coverage, and safe blockers. If the repository is not configured, report that
-result without starting setup automatically.
+Verify the installation by loading `/virgo:setup`. Use it to resolve the
+current GitHub `owner/repository`, initialize or resume the Virgo workspace,
+and guide the user through every connector available in this deployment. The
+skill obtains separate source-processing approval before setup and uses the
+hosted connector catalog rather than inferring integrations from an empty
+workspace `sources` list.
 
 Installed skills appear under the plugin namespace, including
-`/virgo:propermotion` and `/virgo:quick-diagnose`.
+`/virgo:setup`, `/virgo:analyze`, and `/virgo:identify-kpis`.
 
 ## Codex
 
@@ -92,11 +93,12 @@ codex mcp login virgo
 Complete OAuth in the browser, then start a new task so Codex loads the current
 skills and MCP tools.
 
-Verify the installation by calling `virgo_get_workspace_context` with the
-current GitHub `owner/repository` name. The connection is ready when the
-read-only operation returns the workspace's capabilities, sources, freshness,
-coverage, and safe blockers. If the repository is not configured, report that
-result without starting setup automatically.
+Verify the installation by loading `$setup`. Use it to resolve the current
+GitHub `owner/repository`, initialize or resume the Virgo workspace, and guide
+the user through every connector available in this deployment. The skill
+obtains separate source-processing approval before setup and uses the hosted
+connector catalog rather than inferring integrations from an empty workspace
+`sources` list.
 
 Use `/skills` to browse the installed workflows or mention one directly, such
-as `$propermotion` or `$quick-diagnose`.
+as `$setup`, `$analyze`, or `$identify-kpis`.

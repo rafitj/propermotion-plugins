@@ -1,6 +1,0 @@
-interface:
-  display_name: "Define Success"
-  short_description: "Define outcomes, KPIs, and guardrails"
-  default_prompt: "Use $define-success to build an opinionated success framework for this agent with me."
-policy:
-  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Identify KPIs"
+  short_description: "Identify outcomes, KPIs, and guardrails"
+  default_prompt: "Use $identify-kpis to identify an opinionated KPI framework for this agent with me."
+policy:
+  allow_implicit_invocation: true

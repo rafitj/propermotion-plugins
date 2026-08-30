@@ -1,7 +1,7 @@
 {
   "name": "virgo",
-  "version": "0.1.0",
-  "description": "Diagnose, instrument, measure, and improve production AI agents with Virgo.",
+  "version": "0.3.0",
+  "description": "Analyze, instrument, measure, and improve production AI agents with Virgo.",
   "author": {
     "name": "Proper Motion",
     "url": "https://app.propermotion.ai"
@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Virgo",
     "shortDescription": "Improve agents from production evidence.",
-    "longDescription": "Connect Virgo once, run its canonical production-analysis chain, and use repeatable workflows to diagnose agents, add observability, define success, capture feedback, and ship verified fixes.",
+    "longDescription": "Initialize Virgo and its connectors, analyze specific production questions, and use repeatable workflows to add observability, identify KPIs, capture feedback, and ship verified fixes.",
     "developerName": "Proper Motion",
     "category": "Developer Tools",
     "capabilities": [
@@ -28,8 +28,9 @@
     ],
     "websiteURL": "https://app.propermotion.ai",
     "defaultPrompt": [
-      "Diagnose the highest-impact production agent problem.",
-      "Check whether Virgo has enough evidence to diagnose my agent.",
+      "Initialize this repository workspace and guide me through every connector available in this Virgo deployment.",
+      "Analyze the highest-impact production agent problem.",
+      "Analyze which customers are affected by a specific failure pattern.",
       "Turn a Virgo finding into a fix and prove the result."
     ]
   },

@@ -1,17 +1,19 @@
 ---
-name: define-success
-description: "Collaboratively define an AI agent's success framework, primary KPI, leading quality measures, and guardrails. Use when a team lacks clear outcomes, has vanity metrics, cannot connect agent behavior to business impact, or wants an opinionated KPI setup with selectable scope."
+name: identify-kpis
+description: "Identify and define the primary KPI, leading measures, and operational guardrails for an AI agent. Use when a team needs measurable outcomes, wants to replace vanity metrics, cannot connect agent behavior to business impact, or needs an opinionated KPI contract with selectable scope."
 ---
 
-# Define Success
+# Identify KPIs
 
-Build a measurement contract the team can actually operate. Be comprehensive first and selective second.
+Build a measurement contract the team can actually operate. Be comprehensive
+first and selective second.
 
 ## Interaction contract
 
 Use `Discover -> Propose comprehensively -> Explain tradeoffs -> Select/restrict -> Approve -> Configure -> Verify -> Preserve deferred work`.
 
-Do not configure a KPI, add instrumentation, or edit application code until the user approves its exact definition and source.
+Do not configure a KPI, add instrumentation, or edit application code until the
+user approves its exact definition and source.
 
 ## 1. Discover the business and evidence model
 
@@ -22,7 +24,7 @@ cadence, and decision the KPI should support. If no repository binding exists,
 offer the hosted setup flow and obtain source-processing approval before calling
 `virgo_begin_setup`. Ask for business context only when it cannot be derived.
 
-## 2. Propose a complete success framework
+## 2. Propose a complete KPI framework
 
 Recommend:
 
@@ -32,13 +34,21 @@ Recommend:
 - segmentation by workflow and meaningful customer cohort;
 - a review cadence, owner, and decision threshold.
 
-Every metric definition must state name, behavioral meaning, grain, numerator, denominator, source, identity join, aggregation, window, baseline, direction, target, exclusions, freshness, and known gaming risk. Distinguish an outcome metric from a proxy and a diagnostic metric.
+Every metric definition must state name, behavioral meaning, grain, numerator,
+denominator, source, identity join, aggregation, window, baseline, direction,
+target, exclusions, freshness, and known gaming risk. Distinguish an outcome
+metric from a proxy and a diagnostic metric.
 
-Show a recommended framework plus credible alternatives and their tradeoffs. Favor the smallest set that changes decisions; reject attractive metrics that the team cannot measure or act on.
+Show a recommended framework plus credible alternatives and their tradeoffs.
+Favor the smallest set that changes decisions; reject attractive metrics that
+the team cannot measure or act on.
 
 ## 3. Select and approve
 
-Keep a ledger of accepted, reduced, deferred, and rejected metrics. If a metric is valuable but unmeasurable, specify the missing trace, feedback, identity, or outcome event and route that work to `$instrument-agent` or `$capture-feedback`. Do not silently weaken the metric to fit available data.
+Keep a ledger of accepted, reduced, deferred, and rejected metrics. If a metric
+is valuable but unmeasurable, specify the missing trace, feedback, identity, or
+outcome event and route that work to `$instrument-agent` or
+`$capture-feedback`. Do not silently weaken the metric to fit available data.
 
 Before configuration, restate the exact primary KPI contract and ask for
 approval. Include supported KPI configuration in the exact setup plan and call
