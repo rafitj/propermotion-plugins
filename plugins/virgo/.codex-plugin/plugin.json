@@ -1,6 +1,6 @@
 {
   "name": "virgo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Analyze, instrument, measure, and improve production AI agents with Virgo.",
   "author": {
     "name": "Proper Motion",
@@ -27,6 +27,9 @@
       "Agent improvement workflows"
     ],
     "websiteURL": "https://app.propermotion.ai",
+    "composerIcon": "./assets/proper-motion-favicon.svg",
+    "logo": "./assets/proper-motion-favicon-navy.svg",
+    "logoDark": "./assets/proper-motion-favicon-white.svg",
     "defaultPrompt": [
       "Initialize this repository workspace and guide me through every connector available in this Virgo deployment.",
       "Analyze the highest-impact production agent problem.",

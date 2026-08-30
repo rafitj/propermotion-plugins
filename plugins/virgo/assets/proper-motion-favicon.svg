@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="proper-motion-favicon-background" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121421"/>
+      <stop offset="1" stop-color="#1b243b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#proper-motion-favicon-background)"/>
+  <path fill="#fff" d="M0 170 199 158 50 56 55 49 221 135 174 4 181 0 255 134 298 51 306 53 279 159 354 170 354 179 279 190 306 296 298 298 255 215 181 349 174 346 221 214 55 300 50 293 199 191 0 179Z" transform="translate(66 69) scale(1.073)"/>
+</svg>

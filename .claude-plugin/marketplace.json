@@ -11,7 +11,7 @@
       "name": "virgo",
       "source": "./plugins/virgo",
       "description": "Analyze, instrument, measure, and improve production AI agents with Virgo.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "homepage": "https://app.propermotion.ai",
       "repository": "https://github.com/rafitj/propermotion-plugins"
     }
