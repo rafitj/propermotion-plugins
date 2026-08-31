@@ -152,6 +152,15 @@ channel, Linear team, Drive file or folder, Sentry project, Notion page, or
 other account resource. Call `virgo_verify_connector` only with those selected
 IDs and approved non-secret settings.
 
+Slack feedback or context capture uses the setup-specific source contract:
+call `virgo_get_setup_slack_channels`, show the freshly allowed channel names,
+and ask the user to choose exactly one channel and whether thread replies should
+be included. Persist that exact choice with `virgo_bind_setup_slack_channel`.
+Ask separately whether Virgo may send Slack notifications; only after approval,
+call `virgo_enable_setup_slack_notifications`. Do not use the generic connector
+resource tool for this legacy Slack source, and do not infer notification
+permission from Slack OAuth or channel selection.
+
 Historical trace synchronization is a separate user decision from authorizing
 the trace provider. After the selected trace connection is verified, show the
 plain-language time window and ask once before importing history. If the user
@@ -171,6 +180,13 @@ confirms the new state. A managed destination follows the same secure handoff
 unless an exact hosted MCP configuration capability exists.
 
 Present repository-backed identity and KPI candidates before configuring them.
+Call `virgo_get_setup_kpi_metrics` when discovery reports metric candidates.
+For each candidate, show its name, kind, source, signal key, unit, direction,
+confidence, and source links from `virgo_get_setup_kpi_metric_evidence`. Ask the
+user to confirm, dismiss, or rename each exact mapping, then persist each
+approved decision with `virgo_update_setup_kpi_metric`. Do not treat candidate
+confirmation as approval of a business target or as a complete primary KPI.
+
 For identity, show the account or user grain and exact non-secret source field,
 then ask the user to confirm that mapping. For the primary KPI, show its name,
 kind, target, grain, window, and source, and ask the user to confirm the whole
