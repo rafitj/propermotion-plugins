@@ -24,15 +24,16 @@ launcher remains client-owned.
 Virgo owns pattern, root-cause, impact, proposed-fix, and validation truth. The
 host coding agent owns conversation and authorized repository execution.
 
-The normal setup journey is `Connect -> Scan -> Review plan -> Authorize ->
-Verify -> Ready`. Do not launch `virgo mcp`, use `virgo_local`, or ask the user
-to manage a local authentication lock as a fallback for a hosted failure.
+The normal setup journey is `Connect -> Scan -> Review relevant sources ->
+Authorize exact resources -> Verify -> Ready`. Do not launch `virgo mcp`, use
+`virgo_local`, or ask the user to manage a local authentication lock as a
+fallback for a hosted failure.
 
 ## Workflows
 
-- Setup — initialize or resume a repository workspace, discover the real
-  deployment-specific connector catalog, authorize approved providers, and
-  verify exact resource scopes.
+- Setup — initialize or resume a repository workspace, recommend only providers
+  supported by repository evidence or known user context, authorize approved
+  providers, and verify exact resource scopes.
 - Analyze — answer a requested production question about trace patterns, root
   cause, affected customers, customer/ARR impact, churn, or validation evidence.
 - Instrument Agent — collaboratively select and verify comprehensive observability changes.
@@ -40,7 +41,11 @@ to manage a local authentication lock as a fallback for a hosted failure.
 - Capture Feedback — design explicit and implicit feedback with optional application UX changes.
 - Fix and Prove — ship one approved repair and verify its behavioral and production impact.
 
-Each mutating workflow follows the same contract:
+Setup uses the shorter user-visible contract `Discover -> Recommend relevant
+sources -> Approve named providers -> Authorize exact resources -> Verify`.
+Internal plan hashes and projection tokens do not become user decisions.
+
+The other mutating workflows follow this contract:
 
 `Discover -> Propose comprehensively -> Explain tradeoffs -> Select/restrict -> Approve -> Apply -> Verify -> Preserve deferred work`
 

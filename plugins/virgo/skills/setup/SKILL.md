@@ -20,16 +20,16 @@ Linear, or other integrations. Do not infer connector state from the workspace
 context's `sources` list: it is evidence readiness, not the connector catalog.
 
 If the workspace does not exist, or the user asked to initialize or change its
-connectors, explain the current repository-processing boundary. Treat an explicit
-user request to set up or initialize Virgo for the current repository as approval
-for this initial read-only repository processing; do not ask for a second
-confirmation. Then call `virgo_begin_setup`: Virgo pins the selected GitHub ref,
-creates a read-only checkout, excludes credential-named paths and private keys,
-lets Codex inspect the disclosed repository, and stores a source-anchored evidence
-receipt. Git LFS, submodule, binary, and permission limitations remain explicit.
-This grants no repository write authority. If the user did not explicitly request
-setup or initialization, obtain approval after the disclosure before calling the
-tool.
+connectors or mappings, explain the current repository-processing boundary. Treat
+an explicit user request to set up or initialize Virgo for the current repository
+as approval for this initial read-only repository processing; do not ask for a
+second confirmation. Then call `virgo_begin_setup`: Virgo pins the selected GitHub
+ref, creates a read-only checkout, excludes credential-named paths and private
+keys, lets Codex inspect the disclosed repository, and stores a source-anchored
+evidence receipt. Git LFS, submodule, binary, and permission limitations remain
+explicit. This grants no repository write authority. If the user did not
+explicitly request setup or initialization, obtain approval after the disclosure
+before calling the tool.
 
 Open only an exact signed GitHub authorization URL returned by Virgo. After the
 callback, return to MCP and retry with the same idempotency key. Poll
@@ -78,6 +78,9 @@ category. If host context is inconclusive, ask a simple open question such as
 "Do you keep useful product feedback or company context outside this repo? If
 so, where?" Do not present a long menu. Validate any user-named or context-backed
 provider against `virgo_get_connector_setup` before offering to connect it.
+Treat coding-agent memory and prior user-authorized conversation context as a
+relevance hint only. It may justify checking whether a provider is available, but
+it is never connection state, resource scope, account selection, or authorization.
 
 If no connector was detected, say the repository scan is complete and ask the
 non-code context question above; do not show the empty or rejected plan groups.
@@ -129,6 +132,11 @@ any catalog connector.
 Handle an approved non-code connector separately through the connector setup
 tools after the scan plan is recorded; do not pretend it was detected in source.
 Approval does not start OAuth. Follow only the returned exact connector actions.
+Do not reauthorize an existing connector merely because setup started again.
+Preserve a healthy connection and its approved resource scope. Start a
+replacement authorization only after an explicit live verification reports that
+the existing credential or selected scope is no longer usable, and explain that
+failure before opening OAuth.
 For an approved OAuth item, call
 `virgo_start_connector_authorization` once with its exact source or
 handoff-destination role. Open only the returned signed URL without modification.
@@ -144,6 +152,15 @@ channel, Linear team, Drive file or folder, Sentry project, Notion page, or
 other account resource. Call `virgo_verify_connector` only with those selected
 IDs and approved non-secret settings.
 
+Historical trace synchronization is a separate user decision from authorizing
+the trace provider. After the selected trace connection is verified, show the
+plain-language time window and ask once before importing history. If the user
+approves a full 30-day backfill, call `virgo_start_trace_sync` for exactly that
+one connection with `since` set to 30 days before the current UTC time and
+`until` set to the current UTC time. Poll `virgo_get_trace_sync` to a terminal
+state. Do not infer backfill consent from provider approval, silently widen the
+window, or claim completion from a queued or running sync.
+
 Never ask the user to paste API keys, tokens, passwords, or credentials into
 chat or MCP tool arguments. For an `api_key` or `one_time_credential` catalog
 item, open only the exact `secure_configuration_url` returned by
@@ -153,12 +170,19 @@ MCP, refresh connector setup, and continue only after the connection record
 confirms the new state. A managed destination follows the same secure handoff
 unless an exact hosted MCP configuration capability exists.
 
-For an approved KPI or account/user identity mapping, prefer the exact hosted
+Present repository-backed identity and KPI candidates before configuring them.
+For identity, show the account or user grain and exact non-secret source field,
+then ask the user to confirm that mapping. For the primary KPI, show its name,
+kind, target, grain, window, and source, and ask the user to confirm the whole
+contract. Never invent a business target, grain, window, source, or customer
+identifier when discovery did not provide one.
+
+For an approved KPI or account/user identity mapping, call the exact hosted
 `virgo_configure_setup_primary_kpi` and
-`virgo_configure_setup_identity_mapping` tools when available. These calls
-persist non-secret configuration only. They do not authorize a connector and do
-not prove that observations, a baseline, or an identity join exists; refresh
-`virgo_get_setup` and verify real evidence afterward.
+`virgo_configure_setup_identity_mapping` tools. These calls persist non-secret
+configuration only. They do not authorize a connector and do not prove that
+observations, a baseline, or an identity join exists; refresh `virgo_get_setup`
+and verify real evidence afterward.
 
 ## Finish repository setup
 
