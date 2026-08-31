@@ -12,8 +12,9 @@ Setup and product tools use the hosted Streamable HTTP endpoint at
 `https://api.propermotion.ai/mcp`. AuthKit supplies standards-based OAuth; no
 Virgo CLI process or macOS Keychain access is involved. Hosted setup resolves
 the repository workspace, queues the canonical durable repository scan,
-presents one exact plan for approval, and returns signed provider authorization
-handoffs. After host-owned changes, it records hash-pinned application and
+presents a short relevance-based connector plan for approval, and returns
+signed provider authorization handoffs. Internal plan tokens stay behind the
+scenes. After host-owned changes, it records hash-pinned application and
 verification receipts. It never implements a second setup or analysis state
 machine or receives repository write authority.
 When the host can choose where to open a returned authorization URL, Virgo asks

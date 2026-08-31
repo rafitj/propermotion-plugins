@@ -9,8 +9,9 @@ Copy this prompt into either client:
 > setup guide below and follow exactly one branch for the product running this
 > session: Claude Code or Codex. Install or update the plugin, authenticate its
 > hosted Virgo MCP server, verify the connection, then use the installed setup
-> skill to initialize this repository workspace and guide me through every
-> connector available in this deployment:
+> skill to initialize this repository workspace. Recommend only integrations
+> relevant to the code or tools I use, ask where I keep product feedback or
+> company context when that is unclear, and keep the setup guidance simple:
 > https://github.com/rafitj/propermotion-plugins/blob/main/GETTING_STARTED.md
 
 See [GETTING_STARTED.md](./GETTING_STARTED.md) for the complete product-specific

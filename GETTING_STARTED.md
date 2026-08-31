@@ -40,10 +40,13 @@ Start a new conversation so Claude Code loads the current skills and MCP tools.
 
 Verify the installation by loading `/virgo:setup`. Use it to resolve the
 current GitHub `owner/repository`, initialize or resume the Virgo workspace,
-and guide the user through every connector available in this deployment. The
-skill obtains separate source-processing approval before setup and uses the
-hosted connector catalog rather than inferring integrations from an empty
-workspace `sources` list.
+and recommend only connectors supported by repository evidence, an explicit
+user choice, or context Claude already has permission to use. If non-code tools
+are unclear, ask where the user keeps relevant feedback or company context
+instead of listing the connector catalog. Keep plan hashes, ETags, commit IDs,
+and unavailable or preview connectors out of normal setup messages. An explicit
+request to initialize Virgo approves the initial read-only repository scan; do
+not ask for a second confirmation.
 
 Installed skills appear under the plugin namespace, including
 `/virgo:setup`, `/virgo:analyze`, and `/virgo:identify-kpis`.
@@ -94,11 +97,14 @@ Complete OAuth in the browser, then start a new task so Codex loads the current
 skills and MCP tools.
 
 Verify the installation by loading `$virgo:setup`. Use it to resolve the current
-GitHub `owner/repository`, initialize or resume the Virgo workspace, and guide
-the user through every connector available in this deployment. The skill
-obtains separate source-processing approval before setup and uses the hosted
-connector catalog rather than inferring integrations from an empty workspace
-`sources` list.
+GitHub `owner/repository`, initialize or resume the Virgo workspace, and
+recommend only connectors supported by repository evidence, an explicit user
+choice, or context Codex already has permission to use. If non-code tools are
+unclear, ask where the user keeps relevant feedback or company context instead
+of listing the connector catalog. Keep plan hashes, ETags, commit IDs, and
+unavailable or preview connectors out of normal setup messages. An explicit
+request to initialize Virgo approves the initial read-only repository scan; do
+not ask for a second confirmation.
 
 Use `/skills` to browse the installed workflows or mention one directly, such
 as `$virgo:setup`, `$virgo:analyze`, or `$virgo:identify-kpis`.

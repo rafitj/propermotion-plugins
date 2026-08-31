@@ -51,9 +51,16 @@ outcome event and route that work to `$virgo:instrument-agent` or
 `$virgo:capture-feedback`. Do not silently weaken the metric to fit available data.
 
 Before configuration, restate the exact primary KPI contract and ask for
-approval. Include supported KPI configuration in the exact setup plan and call
-`virgo_approve_setup_plan`; do not invent an unsupported direct configuration
-tool or force a lossy mapping.
+approval. If `virgo_configure_setup_primary_kpi` is available, call it with the
+approved kind, name, target, grain, window, and source. Treat its result as
+configured or collecting, never as proof of observations or a baseline. Use
+`virgo_approve_setup_plan` only for the repository scan and its approved
+connector set; do not force a lossy KPI mapping into that connector plan.
+
+If the approved KPI requires trace-to-customer joins and the exact source fields
+are known, restate them and call `virgo_configure_setup_identity_mapping` after
+approval. Never infer a mapping from a similar-looking field, and never pass
+contact fields, tokens, credentials, or secrets as identity fields.
 
 ## 4. Apply and verify usefulness
 

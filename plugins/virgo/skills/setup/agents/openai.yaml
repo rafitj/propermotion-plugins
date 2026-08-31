@@ -1,6 +1,6 @@
 interface:
   display_name: "Setup"
-  short_description: "Initialize Virgo and connect available sources"
-  default_prompt: "Use $virgo:setup to initialize this repository workspace and guide me through every available connector."
+  short_description: "Initialize Virgo and connect relevant sources"
+  default_prompt: "Use $virgo:setup to initialize this repository workspace, recommend only connectors relevant to the code or tools I use, and keep the guidance simple."
 policy:
   allow_implicit_invocation: true

@@ -6,9 +6,10 @@ description: "Initialize or resume a Virgo workspace and connect its available d
 # Setup
 
 Run Virgo's hosted setup as one guided conversation. The outcome is an
-initialized repository workspace plus an honest connector receipt: what is
-available, what is connected, the exact resources selected, what still needs
-user action, and what is unavailable in this deployment.
+initialized repository workspace plus a short, plain-language connector
+receipt: what Virgo recommends, what is connected, the exact resources
+selected, and what the user needs to do next. Do not dump the deployment
+catalog or internal setup metadata into the conversation.
 
 ## Resolve the workspace
 
@@ -40,10 +41,9 @@ a plan or ask the user to choose connectors before repository discovery finishes
 ## Build the connector plan
 
 For a completed repository scan, treat the `setup_plan` returned by
-`virgo_get_setup` as the canonical connector proposal. It is deterministically
-bound to the pinned discovery receipt and the live deployment catalog. Present
-the pinned repository, commit, tracked-file count, and scan limitations, then
-keep these plan groups distinct:
+`virgo_get_setup` as internal safety and recommendation state. It is bound to
+the pinned discovery receipt and live deployment catalog, but it is not a
+user-facing checklist. Keep these groups distinct while reasoning:
 
 - `suggested_connectors` were detected in the repository and are deployable;
 - `detected_but_unavailable` were detected but cannot be connected here;
@@ -54,10 +54,35 @@ keep these plan groups distinct:
   re-suggested;
 - `detected_services_without_connector` were found but have no catalog connector.
 
-If no connector was detected, still present the complete plan and its
-`not_detected_connectors`; an empty suggestion set is a reviewable result, not a
-missing capability. Never describe working-tree-only or untracked files as part
-of a scan of a pinned GitHub commit.
+Use `suggested_connectors` as the repository-backed recommendation set. Never
+recommend a connector merely because it appears in `other_available_connectors`
+or in the deployment catalog. Do not enumerate or proactively mention
+`detected_but_unavailable`, `not_detected_connectors`, preview, coming-soon,
+configuration-required, unhealthy, blocked, or unsupported connectors. If the
+user explicitly asks about a named connector that cannot be connected, say only
+that it cannot be connected right now; do not expand that into a catalog of
+other unavailable products.
+
+Repository source cannot reliably reveal human workflow tools such as chat,
+document storage, or meeting notes. Before recommending one of those, require
+one of these signals:
+
+- the user explicitly named it;
+- the current conversation or other user-authorized host context already shows
+  that the user uses it; or
+- the user answers a short question about where their relevant feedback or
+  company context lives.
+
+Do not infer usage from catalog availability, popularity, or a generic product
+category. If host context is inconclusive, ask a simple open question such as
+"Do you keep useful product feedback or company context outside this repo? If
+so, where?" Do not present a long menu. Validate any user-named or context-backed
+provider against `virgo_get_connector_setup` before offering to connect it.
+
+If no connector was detected, say the repository scan is complete and ask the
+non-code context question above; do not show the empty or rejected plan groups.
+Never describe working-tree-only or untracked files as part of a scan of a
+pinned GitHub commit.
 
 For an existing workspace when the user only asked to inspect or change
 connectors, call `virgo_get_connector_setup` and keep these catalog groups
@@ -68,25 +93,43 @@ distinct:
   message;
 - current connections report authorization and verification state.
 
-Interpret "all connectors" as every catalog entry whose
-`product_availability` is `available` and whose `deployment_state` is
-`configured`, plus only configured handoff destinations. Exclude preview,
-coming-soon, configuration-required, unhealthy, blocked, and already-connected
-duplicates. State those exclusions plainly rather than silently shrinking the
-request.
+Interpret "all connectors" in a general setup request as all relevant
+connectors supported by repository evidence, explicit user choices, or reliable
+host context. Only enumerate every connectable catalog entry when the user
+specifically asks to see the full available catalog. Even then, omit unavailable
+and preview entries rather than announcing exclusions.
 
-Present one compact plan grouped by source and destination. For each item show
-the provider, why it was or was not suggested, purpose, authorization kind,
-whether resource selection is required, and current state. The user's request
-for "all" approves the provider set, but it never approves an account, channel,
-team, project, file, folder, or secret on the user's behalf.
+Present one compact recommendation grouped by source and destination. For each
+item show only the provider, why it is relevant, what it would add, and the next
+user action. Use friendly provider names and ordinary status language. In normal
+setup conversation, do not show commit SHAs, receipt hashes, `plan_hash`,
+`projection_etag`, run IDs, workspace refs, schema versions, raw status enums,
+or idempotency keys. These values are internal tool arguments. Surface scan
+limitations only when they materially weaken a recommendation or the user asks
+for technical details.
+
+An explicit request to connect named providers approves that provider set; do
+not ask the user to approve it again. A general setup request does not approve
+newly recommended providers: show the short human-readable list and ask once,
+for example, "I found Langfuse in this repo. Do you want Virgo to connect its
+traces?" Provider approval never chooses an account, channel, team, project,
+file, folder, or secret on the user's behalf.
 
 ## Connect and scope each provider
 
-For a scan-derived plan, ask the user to approve the exact plan hash and optionally
-restrict the suggested provider set. Call `virgo_approve_setup_plan` with that
-exact subset. Approval does not start OAuth. Follow only the returned exact
-connector actions. For an approved OAuth item, call
+For a scan-derived plan, call `virgo_approve_setup_plan` only after the user has
+approved the visible, named repository-backed provider set. Pass the current
+`plan_hash` and `projection_etag` returned by `virgo_get_setup` as internal
+arguments; never ask the user to read, repeat, or approve those tokens. If the
+plan changed, refresh it and explain only any user-visible recommendation change.
+Pass only approved `suggested_connectors` in the tool's `providers` argument.
+If that suggestion set is empty, record the plan with an empty `providers` list
+without asking the user to approve internal metadata; this does not authorize
+any catalog connector.
+Handle an approved non-code connector separately through the connector setup
+tools after the scan plan is recorded; do not pretend it was detected in source.
+Approval does not start OAuth. Follow only the returned exact connector actions.
+For an approved OAuth item, call
 `virgo_start_connector_authorization` once with its exact source or
 handoff-destination role. Open only the returned signed URL without modification.
 When the host can choose the browser and an external Google Chrome integration
@@ -110,21 +153,28 @@ MCP, refresh connector setup, and continue only after the connection record
 confirms the new state. A managed destination follows the same secure handoff
 unless an exact hosted MCP configuration capability exists.
 
+For an approved KPI or account/user identity mapping, prefer the exact hosted
+`virgo_configure_setup_primary_kpi` and
+`virgo_configure_setup_identity_mapping` tools when available. These calls
+persist non-secret configuration only. They do not authorize a connector and do
+not prove that observations, a baseline, or an identity join exists; refresh
+`virgo_get_setup` and verify real evidence afterward.
+
 ## Finish repository setup
 
 Repository discovery and connector authorization are separate receipts. The
 durable scan produces evidence; `virgo_get_setup` combines that evidence with
-the deployment catalog into the hash-bound connector plan described above. Call
-`virgo_approve_setup_plan` only after the user approves that exact plan hash,
-current projection ETag, and suggested-provider subset. The host coding
-environment owns any separately approved repository edits. Record application
-and focused verification through
+the deployment catalog into the internally versioned connector plan described
+above. The user's approval is for the plain-language provider list; Virgo's
+current plan hash and projection ETag preserve that choice safely behind the
+scenes. The host coding environment owns any separately approved repository
+edits. Record application and focused verification through
 `virgo_record_setup_application` and `virgo_record_setup_verification` using
 their exact receipt hashes.
 
 Finish by refreshing both `virgo_get_setup` and
 `virgo_get_connector_setup`. Report each item as one of: connected and verified,
 authorized but awaiting resource selection, authorization pending, secure
-credential setup required, unavailable in this deployment, or failed with its
-safe blocker. Never collapse configured, authorized, collecting, connected,
-and verified into "set up."
+credential setup required, or failed with a safe, useful next step. Do not add a
+section for unavailable or preview connectors. Never collapse configured,
+authorized, collecting, connected, and verified into "set up."
