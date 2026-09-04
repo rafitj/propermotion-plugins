@@ -46,12 +46,14 @@ same setup request there automatically.
 Load `/virgo:setup` yourself. Resolve the current GitHub `owner/repository` from
 the current branch's upstream first and initialize or resume its Virgo workspace.
 Reuse a completed current discovery receipt; only when one is missing or stale,
-wait for discovery to reach its connector-planning state. Then stop and ask the
-user one concise question containing only connectors supported by repository
-evidence, tools the user explicitly uses, and—when needed—where relevant product
-feedback or company context lives. Do not enumerate the catalog. Continue
-authorization, exact resource selection, and verification only after the user
-answers.
+wait for discovery to reach its connector-planning state. Reuse already-verified
+connector accounts and their exact resource scopes without asking the user to
+reconfirm them. If no newly relevant connector or missing non-code context
+remains, verify and finish. Otherwise, stop and ask one concise question
+containing only connectors supported by repository evidence, tools the user
+explicitly uses, and—when needed—where relevant product feedback or company
+context lives. Do not enumerate the catalog. Continue new authorization or
+resource selection only after the user answers.
 
 ## Codex
 
@@ -92,18 +94,21 @@ there automatically.
 Load `$virgo:setup` yourself. Resolve the current GitHub `owner/repository` from
 the current branch's upstream first and initialize or resume its Virgo workspace.
 Reuse a completed current discovery receipt; only when one is missing or stale,
-wait for discovery to reach its connector-planning state. Then stop and ask the
-user one concise question containing only connectors supported by repository
-evidence, tools the user explicitly uses, and—when needed—where relevant product
-feedback or company context lives. Do not enumerate the catalog. Continue
-authorization, exact resource selection, and verification only after the user
-answers.
+wait for discovery to reach its connector-planning state. Reuse already-verified
+connector accounts and their exact resource scopes without asking the user to
+reconfirm them. If no newly relevant connector or missing non-code context
+remains, verify and finish. Otherwise, stop and ask one concise question
+containing only connectors supported by repository evidence, tools the user
+explicitly uses, and—when needed—where relevant product feedback or company
+context lives. Do not enumerate the catalog. Continue new authorization or
+resource selection only after the user answers.
 
 Keep commands, task restarts, OAuth checks, plan hashes, ETags, commit IDs,
 workspace references, and unavailable or preview connectors out of normal
-user-facing setup messages. The expected first visible pause is the relevant
-connector question, unless OAuth or a repository permission screen truly needs
-the user in the browser.
+user-facing setup messages. A repeat setup with healthy existing connectors
+should finish without a visible pause. Otherwise, the expected first pause is
+the relevant connector question, unless OAuth or a repository permission screen
+truly needs the user in the browser.
 
 After setup, do not ask the user to approve qualifying repeated new-failure
 Match proposals, Linear tickets, or GitHub draft PRs. Virgo creates those

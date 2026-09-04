@@ -30,11 +30,11 @@ missing, Virgo reports the receipt missing or stale, or the user explicitly asks
 for a rescan. Existing healthy connector authorizations and exact resource scopes
 must survive repeated setup unchanged.
 
-For that reused-workspace path, the first user-visible checkpoint is still one
-concise relevant-connector/context question, but do not wait for a new scan or
-ask the user to reapprove an already healthy connector and its existing scope.
-If the user already answered that question in the current conversation, verify
-the workspace and finish without asking it again.
+For that reused-workspace path, reuse already healthy connectors and their exact
+resource scopes without asking the user to reconfirm them. If no newly relevant
+connector or missing non-code context remains, verify the workspace and finish
+without a connector question. Ask one concise question only for a newly relevant
+account or resource scope, or missing context that materially changes setup.
 
 For an existing workspace, a request to use the optional `virgo-observe` SDK
 does not require a new repository scan. Call
