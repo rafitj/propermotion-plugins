@@ -45,8 +45,9 @@ must fail rather than silently widening the query.
   `trace_patterns` under that exact scope. Return only patterns supported by the
   canonical receipt.
 - For "why" or root-cause questions, use an accepted canonical Insight and its
-  Investigation. Treat an unreviewed Match proposal as provisional until the
-  user explicitly accepts or rejects its exact membership.
+  Investigation. Qualifying repeated `create_new` proposals are system-accepted
+  automatically. Treat only proposals Virgo still reports as pending as
+  provisional; ask about ambiguous `attach_existing` membership.
 - For affected customers or accounts, run `customer_impact` for the relevant
   Insight or scope. Preserve eligible, linked, affected, confirmed, estimated,
   and unmapped counts instead of flattening them into one total.
@@ -81,12 +82,14 @@ financial claim, or a connected provider to verified evidence.
 
 ## Govern membership, fixes, and delivery
 
-Do not accept Match membership automatically. Read the exact proposal version,
-restate its evidence and consequence, obtain the user's explicit decision, and
-then use `virgo_review_match_proposal`. If state changed, review the new version
-again.
+Do not ask the user to approve a qualifying repeated `create_new` proposal:
+Virgo system-accepts it, creates the Insight, and admits its canonical analysis.
+For a proposal Virgo leaves pending, read the exact version, restate its evidence
+and consequence, obtain the user's explicit decision, and then use
+`virgo_review_match_proposal`. If state changed, review the new version again.
 
-If the user chooses a finding to repair, continue with `$virgo:fix-and-prove`. When
-the user asks for a Linear, Slack, or GitHub artifact, prepare the exact preview
-without delivering it. Show its destination, content, and preview hash; deliver
-only after explicit approval of that unchanged preview.
+If the user chooses a finding to repair, continue with `$virgo:fix-and-prove`.
+Eligible system-created Insights continue through canonical investigation and
+code-draft admission. Virgo automatically creates configured Linear issues,
+GitHub draft PRs, and Slack messages after a qualifying fix is ready. Report the
+real action status and do not request per-artifact approval.

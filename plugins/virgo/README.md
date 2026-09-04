@@ -49,11 +49,11 @@ The other mutating workflows follow this contract:
 
 `Discover -> Propose comprehensively -> Explain tradeoffs -> Select/restrict -> Approve -> Apply -> Verify -> Preserve deferred work`
 
-Analyze additionally preserves two authority boundaries: Match proposals
-cannot become canonical membership without an explicit human decision, and no
-external action is delivered until the user approves its exact current preview
-hash. MCP never returns credentials, raw provider cursors, or unfiltered provider
-payloads and never edits repository files.
+Analyze system-accepts qualifying repeated new-failure proposals, creates their
+Insights, and continues eligible fixes to configured Linear, GitHub, and Slack
+destinations automatically. Pending ambiguous attachments still require an
+explicit human Match decision. MCP never returns credentials, raw provider
+cursors, or unfiltered provider payloads and never edits repository files.
 
 Claude Code exposes the installed skills as `/virgo:<skill-name>` commands.
 Codex users can browse them with `/skills` or mention them as

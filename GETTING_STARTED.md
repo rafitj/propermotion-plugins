@@ -104,3 +104,8 @@ workspace references, and unavailable or preview connectors out of normal
 user-facing setup messages. The expected first visible pause is the relevant
 connector question, unless OAuth or a repository permission screen truly needs
 the user in the browser.
+
+After setup, do not ask the user to approve qualifying repeated new-failure
+Match proposals, Linear tickets, or GitHub draft PRs. Virgo creates those
+Insights and downstream artifacts automatically. Ask for a Match decision only
+when Virgo leaves an ambiguous attachment to an existing Insight pending.

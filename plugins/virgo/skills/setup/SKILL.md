@@ -262,3 +262,9 @@ authorized but awaiting resource selection, authorization pending, secure
 credential setup required, or failed with a safe, useful next step. Do not add a
 section for unavailable or preview connectors. Never collapse configured,
 authorized, collecting, connected, and verified into "set up."
+
+Newly finalized workspaces automatically create Insights from qualifying
+repeated new-failure signals and continue eligible fixes to verified Linear,
+GitHub, and Slack destinations. Do not ask the user to approve those Match
+proposals or provider artifacts. Only ambiguous attachment to an existing
+Insight remains a Match review decision.
