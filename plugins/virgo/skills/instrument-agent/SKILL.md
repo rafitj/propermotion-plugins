@@ -59,13 +59,19 @@ tests, a full suite, all-extras resolution, or a compatibility matrix during
 customer setup. Use only a fast syntax/import check and one bounded real agent
 execution. Instrument selected optional coverage only at existing boundaries;
 do not create a new schema, outbox, workflow, or feedback UI during initial
-setup. Keep the root `agent_run` open through the application's real outcome
+setup. Register before importing framework/provider modules, including modules
+that bind a provider callable with imports such as `from litellm import
+completion`; registering before the first call is too late for those aliases.
+Use a first-import bootstrap module when needed to preserve import-order lint.
+Keep the root `agent_run` open through the application's real outcome
 evaluation, attach any available stable success, reward, and termination fields
 before it closes, and never invent an outcome. Report a selected category as
 deferred when it has no existing safe boundary. Then call
 `virgo_get_observe_status` for Agent delivery in the selected workspace and
-report each optional category separately. An accepted export or old trace is
-not proof of the new changes.
+report each optional category separately. Require a model, tool, or retrieval
+child span from the same verification run; a root-only Agent trace is incomplete
+and must trigger an import-order/instrumentor repair. An accepted export or old
+trace is not proof of the new changes.
 
 For a generated Observe prompt, stop here; the general workflow below does not
 apply.
