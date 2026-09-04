@@ -14,13 +14,49 @@ catalog or internal setup metadata into the conversation.
 ## Resolve the workspace
 
 Determine the current GitHub `owner/repository` from the checked-out repository;
-do not guess it. Start with `virgo_get_workspace_context`. If a binding exists,
+do not guess it. Prefer the current branch's upstream remote; use `origin` only
+when the branch has no configured upstream. Never silently substitute a different
+fork merely because its remote is named `origin`. Start with
+`virgo_get_workspace_context`. If a binding exists,
 use `virgo_get_connector_setup` to answer read-only questions about Slack,
 Linear, or other integrations. Do not infer connector state from the workspace
 context's `sources` list: it is evidence readiness, not the connector catalog.
 
-If the workspace does not exist, or the user asked to initialize or change its
-connectors or mappings, explain the current repository-processing boundary. Treat
+When the workspace context is fresh and has no repository-evidence blocker,
+reuse that successful receipt and the current connector state. Do not call
+`virgo_begin_setup` merely because the user said initialize, resume, set up, or
+change connectors. Start repository discovery only when the workspace is
+missing, Virgo reports the receipt missing or stale, or the user explicitly asks
+for a rescan. Existing healthy connector authorizations and exact resource scopes
+must survive repeated setup unchanged.
+
+For that reused-workspace path, the first user-visible checkpoint is still one
+concise relevant-connector/context question, but do not wait for a new scan or
+ask the user to reapprove an already healthy connector and its existing scope.
+If the user already answered that question in the current conversation, verify
+the workspace and finish without asking it again.
+
+For an existing workspace, a request to use the optional `virgo-observe` SDK
+does not require a new repository scan. Call
+`virgo_create_observe_setup_prompt`: Agent is required, while System, Product
+(feedback/correlation), and Metrics
+(business observations) are independently selected and default off. Preserve
+the user's selections. Observe captures full content and uses one API key for
+all selected channels; do not ask for an environment or separate channel keys.
+The returned prompt is shared with the UI and contains only an expiring,
+single-use bootstrap grant, never the durable runtime credential. The user's
+request for that exact coverage approves the prompt's bounded implementation
+and one real verification, so do not ask for a second approval. Give the whole
+prompt to the user as the single next action. Never extract, restate, or operate
+its grant separately and never ask the user to copy an API key or endpoint.
+Check `virgo_get_observe_status` after a controlled execution and report
+remaining selected coverage separately. Do not require unselected categories
+or describe a provisioned key as verified tracing. Existing OpenTelemetry or
+provider connectors remain valid alternatives; the SDK is not mandatory.
+
+If the workspace does not exist, Virgo reports repository evidence missing or
+stale, or the user explicitly asked to rescan, explain the current
+repository-processing boundary. Treat
 an explicit user request to set up or initialize Virgo for the current repository
 as approval for this initial read-only repository processing; do not ask for a
 second confirmation. Then call `virgo_begin_setup`: Virgo pins the selected GitHub
@@ -53,6 +89,14 @@ user-facing checklist. Keep these groups distinct while reasoning:
 - `existing_connectors` already have an active connection and must not be
   re-suggested;
 - `detected_services_without_connector` were found but have no catalog connector.
+
+The first user-visible checkpoint is mandatory: after discovery reaches
+`plan_ready`, stop before plan approval, OAuth, secret configuration, or resource
+selection. Ask one concise question containing only the relevant provider names,
+why each is relevant, and any single missing non-code-context question. End the
+turn and wait for the user's answer. The original one-prompt setup request
+authorizes installation, authentication when required, workspace initialization,
+and discovery; it does not authorize connector accounts or resource scopes.
 
 Use `suggested_connectors` as the repository-backed recommendation set. Never
 recommend a connector merely because it appears in `other_available_connectors`

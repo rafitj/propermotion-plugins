@@ -1,6 +1,6 @@
 {
   "name": "virgo",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Analyze, instrument, measure, and improve production AI agents with Virgo.",
   "author": {
     "name": "Proper Motion",
@@ -8,12 +8,7 @@
   },
   "homepage": "https://app.propermotion.ai",
   "repository": "https://github.com/rafitj/propermotion-plugins",
-  "keywords": [
-    "ai-agents",
-    "observability",
-    "evaluation",
-    "mcp"
-  ],
+  "keywords": ["ai-agents", "observability", "evaluation", "mcp"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Virgo (by Proper Motion)",
@@ -31,7 +26,7 @@
     "logo": "./assets/proper-motion-favicon-navy.svg",
     "logoDark": "./assets/proper-motion-favicon-white.svg",
     "defaultPrompt": [
-      "Initialize this repository workspace, recommend only connectors relevant to the code or tools I use, and keep the setup guidance simple.",
+      "Set up this repository workspace, wait for discovery, then ask me once about only the relevant connectors before completing and verifying them.",
       "Analyze the highest-impact production agent problem.",
       "Turn a Virgo finding into a fix and prove the result."
     ]

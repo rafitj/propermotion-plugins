@@ -1,74 +1,71 @@
 # Getting started with Virgo
 
-Follow exactly one branch for the product running this session: Claude Code or
-Codex. The Virgo plugin bundles one hosted OAuth-backed MCP server and six
-skills. Do not configure a second server at the same URL.
+Follow exactly one branch for the AI client running this session. Complete the
+work for the user: do not send commands back for them to run, do not ask them to
+invoke a skill, and do not make them repeat the original request. Reuse an
+existing Virgo login. Authenticate only when the client reports that the hosted
+Virgo MCP server is not authorized.
+
+The copied setup prompt explicitly authorizes installing or updating the plugin,
+using a fresh task when the client requires one, initializing or resuming the
+current repository workspace, and running Virgo's read-only repository
+discovery when no current receipt exists. Resolve the repository from the
+current branch's configured upstream or tracking remote before falling back to
+a remote named `origin`; never substitute a different fork. Reuse a completed
+current discovery receipt, and rescan only when Virgo says it is missing or
+stale. The prompt does not authorize connector accounts, resource scopes,
+secrets, historical imports, notifications, or repository edits.
 
 ## Claude Code
 
-Complete the installation for the user. Inspect the configured marketplaces
-first:
+Inspect the configured marketplaces first:
 
 ```bash
 claude plugin marketplace list --json
 ```
 
-If `propermotion-plugins` is missing, add it:
+If `propermotion-plugins` is missing, add it; otherwise refresh it:
 
 ```bash
 claude plugin marketplace add rafitj/propermotion-plugins
-```
-
-If it is already present, refresh it instead:
-
-```bash
 claude plugin marketplace update propermotion-plugins
 ```
 
-Use `claude plugin install virgo@propermotion-plugins` when Virgo is missing.
-Use `claude plugin update virgo@propermotion-plugins` when it is already
-installed. Do not run both commands unconditionally.
+Run only the applicable install or update command:
 
 ```bash
 claude plugin install virgo@propermotion-plugins
 claude plugin update virgo@propermotion-plugins
 ```
 
-If the client reports that a reload is required, run `/reload-plugins`. Open
-`/mcp`, select `virgo`, and complete OAuth when authentication is required.
-Start a new conversation so Claude Code loads the current skills and MCP tools.
+If Claude reports that a reload is required, run `/reload-plugins`. Inspect
+`/mcp` and authenticate `virgo` only if its current status requires OAuth. If a
+fresh conversation is required to load the plugin, create it and continue the
+same setup request there automatically.
 
-Verify the installation by loading `/virgo:setup`. Use it to resolve the
-current GitHub `owner/repository`, initialize or resume the Virgo workspace,
-and recommend only connectors supported by repository evidence, an explicit
-user choice, or context Claude already has permission to use. If non-code tools
-are unclear, ask where the user keeps relevant feedback or company context
-instead of listing the connector catalog. Keep plan hashes, ETags, commit IDs,
-and unavailable or preview connectors out of normal setup messages. An explicit
-request to initialize Virgo approves the initial read-only repository scan; do
-not ask for a second confirmation.
-
-Installed skills appear under the plugin namespace, including
-`/virgo:setup`, `/virgo:analyze`, and `/virgo:identify-kpis`.
+Load `/virgo:setup` yourself. Resolve the current GitHub `owner/repository` from
+the current branch's upstream first and initialize or resume its Virgo workspace.
+Reuse a completed current discovery receipt; only when one is missing or stale,
+wait for discovery to reach its connector-planning state. Then stop and ask the
+user one concise question containing only connectors supported by repository
+evidence, tools the user explicitly uses, and—when needed—where relevant product
+feedback or company context lives. Do not enumerate the catalog. Continue
+authorization, exact resource selection, and verification only after the user
+answers.
 
 ## Codex
 
-Complete the installation for the user. Inspect the current state first:
+Inspect the current installation first:
 
 ```bash
 codex plugin marketplace list
 codex plugin list --available --json
 ```
 
-If `propermotion-plugins` is missing, add it:
+If `propermotion-plugins` is missing, add it; otherwise refresh it:
 
 ```bash
 codex plugin marketplace add rafitj/propermotion-plugins
-```
-
-If it is already present, refresh it instead:
-
-```bash
 codex plugin marketplace upgrade propermotion-plugins
 ```
 
@@ -86,25 +83,24 @@ codex mcp get virgo --json
 ```
 
 Require exactly one enabled registration for
-`https://api.propermotion.ai/mcp`. Do not add a duplicate Virgo server. If the
-canonical server still needs authorization, run:
+`https://api.propermotion.ai/mcp`. Do not add a duplicate. Run
+`codex mcp login virgo` only if the current registration reports that
+authorization is required. If Codex must use a fresh task to load the plugin,
+create that task from the current checkout and continue this same setup request
+there automatically.
 
-```bash
-codex mcp login virgo
-```
+Load `$virgo:setup` yourself. Resolve the current GitHub `owner/repository` from
+the current branch's upstream first and initialize or resume its Virgo workspace.
+Reuse a completed current discovery receipt; only when one is missing or stale,
+wait for discovery to reach its connector-planning state. Then stop and ask the
+user one concise question containing only connectors supported by repository
+evidence, tools the user explicitly uses, and—when needed—where relevant product
+feedback or company context lives. Do not enumerate the catalog. Continue
+authorization, exact resource selection, and verification only after the user
+answers.
 
-Complete OAuth in the browser, then start a new task so Codex loads the current
-skills and MCP tools.
-
-Verify the installation by loading `$virgo:setup`. Use it to resolve the current
-GitHub `owner/repository`, initialize or resume the Virgo workspace, and
-recommend only connectors supported by repository evidence, an explicit user
-choice, or context Codex already has permission to use. If non-code tools are
-unclear, ask where the user keeps relevant feedback or company context instead
-of listing the connector catalog. Keep plan hashes, ETags, commit IDs, and
-unavailable or preview connectors out of normal setup messages. An explicit
-request to initialize Virgo approves the initial read-only repository scan; do
-not ask for a second confirmation.
-
-Use `/skills` to browse the installed workflows or mention one directly, such
-as `$virgo:setup`, `$virgo:analyze`, or `$virgo:identify-kpis`.
+Keep commands, task restarts, OAuth checks, plan hashes, ETags, commit IDs,
+workspace references, and unavailable or preview connectors out of normal
+user-facing setup messages. The expected first visible pause is the relevant
+connector question, unless OAuth or a repository permission screen truly needs
+the user in the browser.
