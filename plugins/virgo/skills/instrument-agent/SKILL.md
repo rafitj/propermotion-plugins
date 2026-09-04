@@ -62,7 +62,10 @@ do not create a new schema, outbox, workflow, or feedback UI during initial
 setup. Register before importing framework/provider modules, including modules
 that bind a provider callable with imports such as `from litellm import
 completion`; registering before the first call is too late for those aliases.
-Use a first-import bootstrap module when needed to preserve import-order lint.
+Use a first-import bootstrap module when needed. Keep a required side-effect
+import lint-valid by deliberately re-exporting the module or using the project's
+documented narrow suppression; do not leave an unused alias or insert executable
+statements between import groups.
 Keep the root `agent_run` open through the application's real outcome
 evaluation, attach any available stable success, reward, and termination fields
 before it closes, and never invent an outcome. Report a selected category as
