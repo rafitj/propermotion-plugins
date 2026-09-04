@@ -32,9 +32,10 @@ must survive repeated setup unchanged.
 
 For that reused-workspace path, reuse already healthy connectors and their exact
 resource scopes without asking the user to reconfirm them. If no newly relevant
-connector or missing non-code context remains, verify the workspace and finish
-without a connector question. Ask one concise question only for a newly relevant
-account or resource scope, or missing context that materially changes setup.
+connector remains, verify the workspace and finish without a connector question.
+Do not ask about optional external product feedback or company context during a
+replay. Ask one concise question only for a newly relevant account or resource
+scope required by a capability the user requested.
 
 For an existing workspace, a request to use the optional `virgo-observe` SDK
 does not require a new repository scan. Call
