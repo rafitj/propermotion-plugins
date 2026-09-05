@@ -117,7 +117,10 @@ and must trigger an import-order/instrumentor repair. Record the verification's
 UTC start time and opaque run_ref before executing. Use `virgo_search_traces`
 with that start time as `since`, then `virgo_get_trace`, both with
 `purpose="trace_verification"`, to check full content and children for that same
-run_ref. An accepted export or old trace is not proof of the new changes.
+run_ref. For paged trace evidence, inspect `value`, follow required `references`
+by their `path` with the returned `snapshot_hash`, and continue `next_offset` at
+the same path. Null placeholders represent unread content, not empty capture.
+An accepted export or old trace is not proof of the new changes.
 Verify that the normalized environment and commit match the actual execution;
 registration arguments alone do not prove stored provenance.
 For selected Product and Metrics, retain `receipt.status.delivery_id` after
