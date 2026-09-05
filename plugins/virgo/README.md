@@ -8,6 +8,12 @@ installable package is published from the public
 marketplace; its one-prompt setup guide installs or updates the plugin,
 authenticates the bundled MCP, and verifies the connection.
 
+The copied setup prompt also continues Agent instrumentation in the current
+coding task, reuses existing valid tracing, and verifies fresh full-content trace
+evidence from one real run. Optional System, Product, and Metrics coverage stays
+off unless selected. Repeated setup preserves a current discovery receipt and
+healthy connector scopes instead of restarting onboarding.
+
 Setup and product tools use the hosted Streamable HTTP endpoint at
 `https://api.propermotion.ai/mcp`. AuthKit supplies standards-based OAuth; no
 Virgo CLI process or macOS Keychain access is involved. Hosted setup resolves

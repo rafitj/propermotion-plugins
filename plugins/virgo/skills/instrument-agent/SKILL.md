@@ -29,9 +29,12 @@ feedback/metrics keys or an environment choice. Keep the SDK optional for
 other instrumentation requests.
 
 When Virgo returns a single-use Observe bootstrap prompt for coverage the user
-explicitly selected, pasting that prompt is approval for its bounded host edits,
-dependency changes, and one real verification. Apply that scope without a
-second proposal or approval checkpoint. For all other instrumentation requests,
+explicitly selected, the request to instrument this repository or pasting that
+prompt is approval for its bounded host edits, dependency changes, and one real
+verification. Execute the entire returned prompt in this same task when already
+working in the target repository; do not ask the user to paste it again. Apply
+that scope without a second proposal or approval checkpoint. For all other
+instrumentation requests,
 review and obtain approval for concrete host edits before applying them. Never
 pass `recipe_hash` to `virgo_approve_setup_plan` or invent a setup run to record
 application receipts. Use the canonical plan/application tools below only when
@@ -41,9 +44,12 @@ The generated Observe prompt is the fast path and overrides the general phases
 below. Run its bootstrap command immediately, before discovery or edits. It
 exchanges the short-lived one-use grant and writes the runtime key to the
 repository's ignored, owner-readable `.virgo/observe.env`; never read, print,
-or restate that file or its value. An existing local file is preserved. If the
-server is configured but the file is missing, the approved bootstrap replaces
-the active runtime key and warns that other deployments must update it.
+or restate that file or its value. A new prompt reuses a valid saved credential
+while applying its selected coverage; repeating the exact completed prompt is a
+local no-op. Let the bootstrap command validate the saved configuration. If the
+server is configured but the saved key is missing, corrupt, or inactive, the
+approved bootstrap may replace the runtime key; other deployments using the
+prior key must then update it.
 
 Do not call `virgo_get_workspace_context`, `virgo_begin_setup`,
 `virgo_get_setup`, `virgo_approve_setup_plan`,
@@ -73,8 +79,11 @@ deferred when it has no existing safe boundary. Then call
 `virgo_get_observe_status` for Agent delivery in the selected workspace and
 report each optional category separately. Require a model, tool, or retrieval
 child span from the same verification run; a root-only Agent trace is incomplete
-and must trigger an import-order/instrumentor repair. An accepted export or old
-trace is not proof of the new changes.
+and must trigger an import-order/instrumentor repair. Record the verification's
+UTC start time and opaque run_ref before executing. Use `virgo_search_traces`
+with that start time as `since`, then `virgo_get_trace`, both with
+`purpose="trace_verification"`, to check full content and children for that same
+run_ref. An accepted export or old trace is not proof of the new changes.
 
 For a generated Observe prompt, stop here; the general workflow below does not
 apply.

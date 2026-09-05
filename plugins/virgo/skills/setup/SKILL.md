@@ -32,7 +32,8 @@ must survive repeated setup unchanged.
 
 For that reused-workspace path, reuse already healthy connectors and their exact
 resource scopes without asking the user to reconfirm them. If no newly relevant
-connector remains, verify the workspace and finish without a connector question.
+connector remains, continue any requested instrumentation, verify the workspace,
+and finish without a connector question.
 Do not ask about optional external product feedback or company context during a
 replay. Ask one concise question only for a newly relevant account or resource
 scope required by a capability the user requested.
@@ -47,9 +48,12 @@ all selected channels; do not ask for an environment or separate channel keys.
 The returned prompt is shared with the UI and contains only an expiring,
 single-use bootstrap grant, never the durable runtime credential. The user's
 request for that exact coverage approves the prompt's bounded implementation
-and one real verification, so do not ask for a second approval. Give the whole
-prompt to the user as the single next action. Never extract, restate, or operate
-its grant separately and never ask the user to copy an API key or endpoint.
+and one real verification, so do not ask for a second approval. When the user
+requested instrumentation in the current coding repository, execute the entire
+returned prompt in this same task; do not ask the user to paste it again. In a
+read-only host, give the whole prompt to the user as the single next action.
+Never extract, restate, or operate its grant separately and never ask the user
+to copy an API key or endpoint.
 Check `virgo_get_observe_status` after a controlled execution and report
 remaining selected coverage separately. Do not require unselected categories
 or describe a provisioned key as verified tracing. Existing OpenTelemetry or
